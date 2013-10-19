@@ -1,0 +1,10 @@
+d:\users\sujosh\documents\visual studio 2010\Projects\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\bin\SQLMembership-Identity-OWIN.dll
+d:\users\sujosh\documents\visual studio 2010\Projects\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\bin\SQLMembership-Identity-OWIN.pdb
+d:\users\sujosh\documents\visual studio 2010\Projects\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\obj\Debug\ResolveAssemblyReference.cache
+d:\users\sujosh\documents\visual studio 2010\Projects\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\obj\Debug\SQLMembership-Identity-OWIN.dll
+d:\users\sujosh\documents\visual studio 2010\Projects\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\obj\Debug\SQLMembership-Identity-OWIN.pdb
+C:\Users\sujosh\Source\Repos\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\bin\SQLMembership-Identity-OWIN.dll
+C:\Users\sujosh\Source\Repos\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\bin\SQLMembership-Identity-OWIN.pdb
+C:\Users\sujosh\Source\Repos\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\obj\Debug\SQLMembership-Identity-OWIN.csprojResolveAssemblyReference.cache
+C:\Users\sujosh\Source\Repos\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\obj\Debug\SQLMembership-Identity-OWIN.dll
+C:\Users\sujosh\Source\Repos\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\SQLMembership-Identity-OWIN\obj\Debug\SQLMembership-Identity-OWIN.pdb
