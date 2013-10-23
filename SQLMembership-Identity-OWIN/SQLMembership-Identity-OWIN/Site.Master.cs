@@ -13,5 +13,10 @@ namespace SQLMembership_Identity_OWIN
         {
 
         }
+        protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
+        {
+            Context.GetOwinContext().Authentication.SignOut();
+        }
+
     }
 }
