@@ -38,9 +38,9 @@ namespace SQLMembership_Identity_OWIN
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-               appId: "",
-               appSecret: "");
+            //app.UseFacebookAuthentication(
+            //   appId: "",
+            //   appSecret: "");
             
             app.UseGoogleAuthentication();
         }

@@ -39,9 +39,9 @@ namespace SQLMembership_Identity_OWIN
                 string passwordHash = passwordProperties[0];
                 int passwordformat = 1;
                 string salt = passwordProperties[2];
-                if (String.Equals(EncodePassword(providedPassword, passwordformat, salt), passwordHash, StringComparison.CurrentCultureIgnoreCase))
+                if (String.Equals(EncryptPassword(providedPassword, passwordformat, salt), passwordHash, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    return PasswordVerificationResult.Success;
+                    return PasswordVerificationResult.SuccessRehashNeeded;
                 }
                 else
                 {
@@ -50,57 +50,55 @@ namespace SQLMembership_Identity_OWIN
             }
         }
 
-        private string EncodePassword(string pass, int passwordFormat, string salt)
+        //This is copied from the existing SQL providers and is provided only for back-compat.
+        private string EncryptPassword(string pass, int passwordFormat, string salt)
         {
-            if (passwordFormat == 0)
-            {
+            if (passwordFormat == 0) // MembershipPasswordFormat.Clear
                 return pass;
-            }
-            byte[] bytes = Encoding.Unicode.GetBytes(pass);
-            byte[] array = Convert.FromBase64String(salt);
-            byte[] inArray = null;
-            if (passwordFormat == 1)
-            {
-                HashAlgorithm hashAlgorithm = HashAlgorithm.Create("SHA1");
 
-                if (hashAlgorithm is KeyedHashAlgorithm)
+            byte[] bIn = Encoding.Unicode.GetBytes(pass);
+            byte[] bSalt = Convert.FromBase64String(salt);
+            byte[] bRet = null;
+
+            if (passwordFormat == 1)
+            { // MembershipPasswordFormat.Hashed 
+                HashAlgorithm hm = HashAlgorithm.Create("SHA1");
+                if (hm is KeyedHashAlgorithm)
                 {
-                    KeyedHashAlgorithm keyedHashAlgorithm = (KeyedHashAlgorithm)hashAlgorithm;
-                    if (keyedHashAlgorithm.Key.Length == array.Length)
+                    KeyedHashAlgorithm kha = (KeyedHashAlgorithm)hm;
+                    if (kha.Key.Length == bSalt.Length)
                     {
-                        keyedHashAlgorithm.Key = array;
+                        kha.Key = bSalt;
+                    }
+                    else if (kha.Key.Length < bSalt.Length)
+                    {
+                        byte[] bKey = new byte[kha.Key.Length];
+                        Buffer.BlockCopy(bSalt, 0, bKey, 0, bKey.Length);
+                        kha.Key = bKey;
                     }
                     else
                     {
-                        if (keyedHashAlgorithm.Key.Length < array.Length)
+                        byte[] bKey = new byte[kha.Key.Length];
+                        for (int iter = 0; iter < bKey.Length; )
                         {
-                            byte[] array2 = new byte[keyedHashAlgorithm.Key.Length];
-                            Buffer.BlockCopy(array, 0, array2, 0, array2.Length);
-                            keyedHashAlgorithm.Key = array2;
+                            int len = Math.Min(bSalt.Length, bKey.Length - iter);
+                            Buffer.BlockCopy(bSalt, 0, bKey, iter, len);
+                            iter += len;
                         }
-                        else
-                        {
-                            byte[] array3 = new byte[keyedHashAlgorithm.Key.Length];
-                            int num;
-                            for (int i = 0; i < array3.Length; i += num)
-                            {
-                                num = Math.Min(array.Length, array3.Length - i);
-                                Buffer.BlockCopy(array, 0, array3, i, num);
-                            }
-                            keyedHashAlgorithm.Key = array3;
-                        }
+                        kha.Key = bKey;
                     }
-                    inArray = keyedHashAlgorithm.ComputeHash(bytes);
+                    bRet = kha.ComputeHash(bIn);
                 }
                 else
                 {
-                    byte[] array4 = new byte[array.Length + bytes.Length];
-                    Buffer.BlockCopy(array, 0, array4, 0, array.Length);
-                    Buffer.BlockCopy(bytes, 0, array4, array.Length, bytes.Length);
-                    inArray = hashAlgorithm.ComputeHash(array4);
+                    byte[] bAll = new byte[bSalt.Length + bIn.Length];
+                    Buffer.BlockCopy(bSalt, 0, bAll, 0, bSalt.Length);
+                    Buffer.BlockCopy(bIn, 0, bAll, bSalt.Length, bIn.Length);
+                    bRet = hm.ComputeHash(bAll);
                 }
             }
-            return Convert.ToBase64String(inArray);
+
+            return Convert.ToBase64String(bRet);
         }
 
     }
