@@ -1,12 +1,27 @@
+IF OBJECT_ID('AspNetUserRoles', 'U') IS NOT NULL
+BEGIN
 DROP TABLE AspNetUserRoles;
+END
 
+IF OBJECT_ID('AspNetUserClaims', 'U') IS NOT NULL
+BEGIN
 DROP TABLE AspNetUserClaims;
+END
 
+IF OBJECT_ID('AspNetUserLogins', 'U') IS NOT NULL
+BEGIN
 DROP TABLE AspNetUserLogins;
+END
 
+IF OBJECT_ID('AspNetRoles', 'U') IS NOT NULL
+BEGIN
 DROP TABLE AspNetRoles;
+END
 
+IF OBJECT_ID('AspNetUsers', 'U') IS NOT NULL
+BEGIN
 DROP TABLE AspNetUsers;
+END
 
 CREATE TABLE [dbo].[AspNetUsers] (
     [Id]            NVARCHAR (128) NOT NULL,
